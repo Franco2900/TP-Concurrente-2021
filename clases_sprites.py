@@ -16,8 +16,8 @@ class NaveEnemigaComun(pygame.sprite.Sprite):
         self.vida = 2
         
     def update(self):
-        self.rect.y += 1
-        if self.rect.y > 650: self.rect.y = 0 #En caso de que la nave se pierda de vista
+        if self.rect.y > 650: self.rect.y = -100 #En caso de que la nave se pierda de vista
+        else:                 self.rect.y += 1
         
     
 class LaserEnemigo(pygame.sprite.Sprite):
@@ -40,8 +40,8 @@ class NaveEnemigaKamikaze(pygame.sprite.Sprite):
         self.vida = 1
         
     def update(self):
-        self.rect.y += 5
-        if self.rect.y > 650: self.rect.y = 0 #En caso de que la nave se pierda de vista
+        if self.rect.y > 650: self.rect.y = -100 #En caso de que la nave se pierda de vista
+        else:                 self.rect.y += 5
 
 
 
@@ -83,7 +83,7 @@ class Jefe(pygame.sprite.Sprite):
         self.vida = 50
         
     def update(self):
-        self.rect.y += 3
         if self.rect.y > 750: #En caso de que la nave se pierda de vista
             self.rect.y = -150 
             self.rect.x = random.randrange(650)
+        else: self.rect.y += 3
