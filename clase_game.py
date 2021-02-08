@@ -17,7 +17,7 @@ ventana = pygame.display.set_mode((ancho_ventana, alto_ventana) )
 
 class Game(object): 
     def __init__(self, nivel): 
-        self.game_over = False 
+        self.stage_complete = False 
         self.muerte_Jugador = False
         self.pausa = False 
         
@@ -44,7 +44,7 @@ class Game(object):
             util.nivel_1(self)
                                 
             pygame.mixer.music.load("Musica/Raiden Trad SNES Music - Gallantry.mp3")
-            pygame.mixer.music.play()
+            pygame.mixer.music.play(-1)
             
         elif nivel == 2:      
             
@@ -54,7 +54,7 @@ class Game(object):
             util.nivel_2(self)
             
             pygame.mixer.music.load("Musica/Raiden Trad SNES Music - Lightning War.mp3")
-            pygame.mixer.music.play()
+            pygame.mixer.music.play(-1)
             
         elif nivel == 3:      
             
@@ -64,7 +64,7 @@ class Game(object):
             util.nivel_3(self)
     
             pygame.mixer.music.load("Musica/Raiden Trad SNES Music - Fighting Thunder.mp3")
-            pygame.mixer.music.play()
+            pygame.mixer.music.play(-1)
     
     def procesar_eventos(self):
          
@@ -73,9 +73,9 @@ class Game(object):
                 return False
     
             elif self.muerte_Jugador and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  self.__init__(self.nivel)
-            elif self.game_over and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:       self.__init__(self.nivel+1) 
+            elif self.stage_complete and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  self.__init__(self.nivel+1) 
             
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and not self.game_over and not self.muerte_Jugador: 
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and not self.stage_complete and not self.muerte_Jugador: 
                 if not self.pausa: self.pausa = True
                 else:              self.pausa = False
     
@@ -94,7 +94,7 @@ class Game(object):
     
     def logica(self):
         
-        if not self.game_over and not self.pausa: 
+        if not self.stage_complete and not self.pausa: 
             self.lista_Todos_Los_Sprites.update()                                
                 
             for laserJugador in self.lista_Laser_Jugador: #En caso de que se acierte a una nave comun
@@ -162,7 +162,7 @@ class Game(object):
     
     
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0: 
-                   self.game_over = True
+                   self.stage_complete = True
     
              
     
@@ -181,10 +181,11 @@ class Game(object):
             rectangulo_vida = pygame.Rect(nave.rect.left, nave.rect.top-alto_total_barra, calculo_vida_restante, alto_total_barra)
             pygame.draw.rect(ventana, ([0,255,0]), rectangulo_vida)
         
-        
-        if self.game_over and not self.muerte_Jugador:   util.imprimir_mensaje("Game over", ventana, 0)        
-        elif self.muerte_Jugador:                        util.imprimir_mensaje("Has muerto", ventana, 0)       
-        elif self.pausa:                                 util.imprimir_mensaje("Pausa", ventana, 0) 
-        elif not self.game_over and not self.pausa:      self.lista_Todos_Los_Sprites.draw(ventana) 
+        if self.muerte_Jugador:                        util.imprimir_mensaje("Has muerto", ventana, 0)       
+        elif self.pausa:                               util.imprimir_mensaje("Pausa", ventana, 0) 
+        elif self.stage_complete and not self.muerte_Jugador:
+            if self.nivel < 3:                         util.imprimir_mensaje("Stage complete", ventana, 0)
+            else:                                      util.imprimir_mensaje("You won the game", ventana, 0)        
+        elif not self.stage_complete and not self.pausa:    self.lista_Todos_Los_Sprites.draw(ventana) 
         
         pygame.display.update() 
