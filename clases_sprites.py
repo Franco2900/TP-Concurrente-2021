@@ -73,6 +73,7 @@ class LaserJugador(pygame.sprite.Sprite):
     def update(self):
         self.rect.y -= 5
         
+        
 class Jefe(pygame.sprite.Sprite):
     def __init__(self): 
         super().__init__()
@@ -87,3 +88,24 @@ class Jefe(pygame.sprite.Sprite):
             self.rect.y = -150 
             self.rect.x = random.randrange(650)
         else: self.rect.y += 3
+        
+        
+class MisilDerecha(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.transform.scale(pygame.image.load("Imagenes/Sprites/misil.png"), (45,45) )
+        self.rect = self.image.get_rect()
+
+    def update(self):
+        self.rect.x += 5
+        
+
+class MisilIzquierda():
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.transform.scale(pygame.image.load("Imagenes/Sprites/misil.png"), (45,45) )
+        self.image = pygame.transform.rotozoom (self.image, 180, 1)
+        self.rect = self.image.get_rect()
+
+    def update(self):
+        self.rect.x -= 5
