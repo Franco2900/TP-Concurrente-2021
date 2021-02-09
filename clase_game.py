@@ -6,7 +6,7 @@ Created on Sat Jan 23 16:51:23 2021
 """
 #Añadiendo pausa
 import pygame
-import clases_sprites,util,math
+import clases_sprites,util,colisiones
 pygame.mixer.init()
 
 ancho_ventana = 800 
@@ -25,15 +25,17 @@ class Game(object):
         self.lista_Naves_Enemigas_Kamikazes = pygame.sprite.Group()
         self.lista_Jefes                    = pygame.sprite.Group()
         self.lista_Todas_Las_Naves_Enemigas = pygame.sprite.Group()
-        self.lista_Laser_Enemigos           = pygame.sprite.Group() 
+        self.lista_Laser_Enemigos           = pygame.sprite.Group()
+        self.lista_Misiles_Enemigos         = pygame.sprite.Group()
         self.lista_Laser_Jugador            = pygame.sprite.Group() 
         self.lista_Todos_Los_Sprites        = pygame.sprite.Group()
-        
+              
         
         self.naveJugador = clases_sprites.NaveJugador()
         self.lista_Todos_Los_Sprites.add(self.naveJugador)
         
         self.nivel = nivel
+        self.fase_nivel = 1
         
         #Niveles
         if nivel == 1:
@@ -95,59 +97,9 @@ class Game(object):
     def logica(self):
         
         if not self.game_over and not self.pausa: 
-            self.lista_Todos_Los_Sprites.update()                                
-                
-            for laserJugador in self.lista_Laser_Jugador: #En caso de que se acierte a una nave comun
-                lista_Naves_Enemigas_impactadas = pygame.sprite.spritecollide(laserJugador, self.lista_Naves_Enemigas_Comunes, False) 
-                for naveEnemigaComun in lista_Naves_Enemigas_impactadas:
-                    self.lista_Todos_Los_Sprites.remove(laserJugador)
-                    self.lista_Laser_Jugador.remove(laserJugador)
-                    naveEnemigaComun.vida -= 1
-                    if naveEnemigaComun.vida <= 0:
-                        self.lista_Naves_Enemigas_Comunes.remove(naveEnemigaComun)
-                        self.lista_Todas_Las_Naves_Enemigas.remove(naveEnemigaComun)
-                        self.lista_Todos_Los_Sprites.remove(naveEnemigaComun)
-                        
-            for laserJugador in self.lista_Laser_Jugador: #En caso de que se acierte a una nave kamikaze
-                lista_Naves_Enemigas_impactadas = pygame.sprite.spritecollide(laserJugador, self.lista_Naves_Enemigas_Kamikazes, True) 
-                for naveEnemigaKamikaze in lista_Naves_Enemigas_impactadas:
-                    self.lista_Todos_Los_Sprites.remove(laserJugador)
-                    self.lista_Laser_Jugador.remove(laserJugador)
-            
-            for laserJugador in self.lista_Laser_Jugador: #En caso de que se acierte a un jefe
-                lista_Naves_Enemigas_impactadas = pygame.sprite.spritecollide(laserJugador, self.lista_Jefes, False) 
-                for jefe in lista_Naves_Enemigas_impactadas:
-                    self.lista_Todos_Los_Sprites.remove(laserJugador)
-                    self.lista_Laser_Jugador.remove(laserJugador)
-                    jefe.vida -= 1
-                    if jefe.vida <= 0: 
-                        self.lista_Jefes.remove(jefe)
-                        self.lista_Todas_Las_Naves_Enemigas.remove(jefe)
-                        self.lista_Todos_Los_Sprites.remove(jefe)
-            
-            
-            for laserEnemigo in self.lista_Laser_Enemigos: #En caso de que el jugador sea impactado
-                if laserEnemigo.rect.colliderect(self.naveJugador): 
-                    self.lista_Todos_Los_Sprites.remove(laserEnemigo)
-                    self.lista_Todos_Los_Sprites.remove(self.naveJugador)
-                    self.lista_Laser_Enemigos.remove(laserEnemigo)
-                    self.muerte_Jugador = True 
-            
-            for naveEnemigaComun in self.lista_Naves_Enemigas_Comunes: #Choque de una nave comun contra el jugador
-                if naveEnemigaComun.rect.colliderect(self.naveJugador):
-                    self.lista_Todos_Los_Sprites.remove(naveEnemigaComun)
-                    self.lista_Todos_Los_Sprites.remove(self.naveJugador)
-                    self.lista_Todas_Las_Naves_Enemigas.remove(naveEnemigaComun)
-                    self.lista_Naves_Enemigas_Comunes.remove(naveEnemigaComun)
-                    self.muerte_Jugador = True 
-                    
-            for naveEnemigaKamikaze in self.lista_Naves_Enemigas_Kamikazes: #Choque de una nave kamikaze contra el jugador
-                if naveEnemigaKamikaze.rect.colliderect(self.naveJugador):
-                    self.lista_Todos_Los_Sprites.remove(naveEnemigaKamikaze)
-                    self.lista_Todos_Los_Sprites.remove(self.naveJugador)
-                    self.lista_Todas_Las_Naves_Enemigas.remove(naveEnemigaKamikaze)
-                    self.lista_Naves_Enemigas_Kamikazes.remove(naveEnemigaKamikaze)
-                    self.muerte_Jugador = True
+            self.lista_Todos_Los_Sprites.update()                                                   
+            colisiones.chequearColisionesDeDisparos(self)
+            colisiones.chequearChoquesEntreNaves(self)
             
             
             for laserJugador in self.lista_Laser_Jugador: #En caso de que los disparos del jugador se pierdan de vista
@@ -161,17 +113,40 @@ class Game(object):
                     self.lista_Laser_Enemigos.remove(laserEnemigo)
     
     
-            if len(self.lista_Todas_Las_Naves_Enemigas) == 0: 
-                   self.game_over = True
+            if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 1 and self.fase_nivel < 3: #Para chequear la fase del nivel
+                self.fase_nivel += 1         
+                util.nivel_1(self)
+
+                                
+            if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 1 and self.fase_nivel == 3: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
+                self.game_over = True
     
-             
+    
+            
+            if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 2 and self.fase_nivel < 3: #Para chequear la fase del nivel
+                self.fase_nivel += 1         
+                util.nivel_2(self)
+
+                                
+            if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 2 and self.fase_nivel == 3: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
+                self.game_over = True
+                
+                
+            if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 3 and self.fase_nivel < 3: #Para chequear la fase del nivel
+                self.fase_nivel += 1         
+                util.nivel_3(self)
+
+                                
+            if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 3 and self.fase_nivel == 3: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
+                self.game_over = True
+                
     
     def mostrar_en_pantalla(self, ventana):
         
         if self.altura_fondo < 0: self.altura_fondo += 0.5  #Chequeo si la parte de arriba del fondo toco el pixel 0 y me fijo si sigo reccoriendo o no el fondo
         ventana.blit(self.fondo, (0,self.altura_fondo) ) 
         
-              
+        """      
         for nave in self.lista_Todas_Las_Naves_Enemigas:#No anda como debe / Posible segundo hilo
             largo_total_barra = nave.rect.width
             alto_total_barra = 15
@@ -180,6 +155,9 @@ class Game(object):
             #print(calculo_vida_restante)
             rectangulo_vida = pygame.Rect(nave.rect.left, nave.rect.top-alto_total_barra, calculo_vida_restante, alto_total_barra)
             pygame.draw.rect(ventana, ([0,255,0]), rectangulo_vida)
+        """
+        
+        
         
         
         if self.game_over and not self.muerte_Jugador:   util.imprimir_mensaje("Game over", ventana, 0)        
