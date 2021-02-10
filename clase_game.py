@@ -70,7 +70,7 @@ class Game(object):
     
     def procesar_eventos(self):
          
-        for event in pygame.event.get():           
+        for event in pygame.event.get(): #Chequeo si cerrar el juego o no
             if event.type == pygame.QUIT:                 
                 return False
     
@@ -118,7 +118,7 @@ class Game(object):
 
                                 
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 1 and self.fase_nivel == 3: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
-                self.game_over = True
+                self.stage_complete = True
     
     
             
@@ -128,37 +128,54 @@ class Game(object):
 
                                 
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 2 and self.fase_nivel == 3: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
-                self.game_over = True
+                self.stage_complete = True
                 
-                
+            #------------------------------------------------------------#
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 3 and self.fase_nivel < 3: #Para chequear la fase del nivel
-                self.fase_nivel += 1         
-                util.nivel_3(self)
+                self.fase_nivel += 1
+                if self.fase_nivel == 3:
+                    pygame.mixer.music.load("Musica/Go To Blazes! (Boss Theme) Raiden Trad Genesis Soundtrack.mp3")
+                    pygame.mixer.music.play(-1)
+                util.nivel_3(self)                
 
-                                
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 3 and self.fase_nivel == 3: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
-                self.game_over = True
-    
-    
-            if len(self.lista_Todas_Las_Naves_Enemigas) == 0: 
-                   self.stage_complete = True
-    
-             
+                self.stage_complete = True
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("Musica/All Stage Clear Contra Hard Corps Genesis Soundtrack.mp3")
+                pygame.mixer.music.play(-1)
+            #------------------------------------------------------------#
+
+            #------------------------------------------------------------#
+            #Para el ataque con los laseres duales delanteros del jefe
+            for jefe in self.lista_Jefes:
+                laserEnemigo = clases_sprites.LaserEnemigo()
+                laserEnemigo.rect.x = jefe.rect.centerx-7
+                laserEnemigo.rect.y = jefe.rect.bottom
+                self.lista_Laser_Enemigos.add(laserEnemigo)
+                self.lista_Todos_Los_Sprites.add(laserEnemigo)
+                
+                laserEnemigo = clases_sprites.LaserEnemigo()
+                laserEnemigo.rect.x = jefe.rect.centerx-22
+                laserEnemigo.rect.y = jefe.rect.bottom             
+                self.lista_Laser_Enemigos.add(laserEnemigo)
+                self.lista_Todos_Los_Sprites.add(laserEnemigo)
+            #------------------------------------------------------------#
     
     def mostrar_en_pantalla(self, ventana):
         
         if self.altura_fondo < 0: self.altura_fondo += 0.5  #Chequeo si la parte de arriba del fondo toco el pixel 0 y me fijo si sigo reccoriendo o no el fondo
         ventana.blit(self.fondo, (0,self.altura_fondo) ) 
         
-              
-        for nave in self.lista_Todas_Las_Naves_Enemigas:#No anda como debe / Posible segundo hilo
-            largo_total_barra = nave.rect.width
-            alto_total_barra = 15
-            calculo_vida_restante = int((nave.vida*100)/largo_total_barra)
-            #print(math.ceil(nave.vida/100))
-            #print(calculo_vida_restante)
-            rectangulo_vida = pygame.Rect(nave.rect.left, nave.rect.top-alto_total_barra, calculo_vida_restante, alto_total_barra)
-            pygame.draw.rect(ventana, ([0,255,0]), rectangulo_vida)
+        #------------------------------------------------------------#
+        #Barra de vida de los enemigos
+        if len(self.lista_Todas_Las_Naves_Enemigas) > 0 and not self.pausa and not self.muerte_Jugador:
+            for nave in self.lista_Todas_Las_Naves_Enemigas:
+                largo_total_barra = nave.rect.width
+                alto_total_barra = 15
+                calculo_vida_restante = int((nave.vida*100)/largo_total_barra)
+                rectangulo_vida = pygame.Rect(nave.rect.left, nave.rect.top-alto_total_barra, calculo_vida_restante, alto_total_barra)
+                pygame.draw.rect(ventana, ([0,255,0]), rectangulo_vida)
+        #------------------------------------------------------------#
         
         if self.muerte_Jugador:                        util.imprimir_mensaje("Has muerto", ventana, 0)       
         elif self.pausa:                               util.imprimir_mensaje("Pausa", ventana, 0) 
