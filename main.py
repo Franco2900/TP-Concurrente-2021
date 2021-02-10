@@ -14,7 +14,7 @@ def main():
     clock = pygame.time.Clock()
     
     jugando = True
-    juego = clase_game.Game(3)
+    juego = clase_game.Game(1)
     #------------------------------------------------------------#
     hilo_ataques_enemigos = threading.Thread(target=util.disparo_enemigo, args=(juego, 1,) ) 
     

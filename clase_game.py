@@ -154,9 +154,7 @@ class Game(object):
                 self.lista_Laser_Enemigos.add(laserEnemigo)
                 self.lista_Todos_Los_Sprites.add(laserEnemigo)
             #------------------------------------------------------------#
-            
-            if len(self.lista_Todas_Las_Naves_Enemigas) == 0: 
-                   self.stage_complete = True 
+
             """if len(self.lista_Todas_Las_Naves_Enemigas) == 0:
                 if self.nivel == 1:
                     if self.fase_nivel < 3: #Para chequear la fase del nivel
