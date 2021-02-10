@@ -119,171 +119,79 @@ def movimiento(object, directionX, directionY, quantityX, quantityY):
 def nivel_1(object):
     
     if object.fase_nivel == 1:
-        for x in range(0, 700, 300): 
-            naveEnemigaComun = clases_sprites.NaveEnemigaComun()
-            naveEnemigaComun.rect.x = x
-            naveEnemigaComun.rect.y = -100
-    
+        for x in range(50, 700, 300): 
+            naveEnemigaComun = clases_sprites.NaveEnemigaComun(x, -100)
             object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
             object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
             object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
             
-        naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-        naveEnemigaKamikaze.rect.x = 200
-        naveEnemigaKamikaze.rect.y = -100
-            
-        object.lista_Naves_Enemigas_Kamikazes.add(naveEnemigaKamikaze)
-        object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaKamikaze)
-        object.lista_Todos_Los_Sprites.add(naveEnemigaKamikaze)
+        for x in range(250, 451, 200):
+            naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze(x, -100)
+            object.lista_Naves_Enemigas_Kamikazes.add(naveEnemigaKamikaze)
+            object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaKamikaze)
+            object.lista_Todos_Los_Sprites.add(naveEnemigaKamikaze)
     
     
-    if object.fase_nivel == 2:
-        for i in range(4):
-            if i==0:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 350
-                naveEnemigaKamikaze.rect.y = -100
-                
-    
-            if i==1:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 350
-                naveEnemigaKamikaze.rect.y = -200
-                
-    
-            if i==2:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 350
-                naveEnemigaKamikaze.rect.y = -300
-                
-            if i<=2:
-                object.lista_Naves_Enemigas_Kamikazes.add(naveEnemigaKamikaze)
-                object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaKamikaze)
-                object.lista_Todos_Los_Sprites.add(naveEnemigaKamikaze)
-                
-            if i==3:
-                naveEnemigaComun = clases_sprites.NaveEnemigaComun()
-                naveEnemigaComun.rect.x = 350
-                naveEnemigaComun.rect.y = -400
-                
-                object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
-                object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
-                object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
+    elif object.fase_nivel == 2:
+        for y in range(-100, -301, -100):
+            naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze(350, y)
+            object.lista_Naves_Enemigas_Kamikazes.add(naveEnemigaKamikaze)
+            object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaKamikaze)
+            object.lista_Todos_Los_Sprites.add(naveEnemigaKamikaze)
+        
+        naveEnemigaComun = clases_sprites.NaveEnemigaComun(350, -250)
+        object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
+        object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
+        object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
                 
                 
-    if object.fase_nivel == 3:
-        for i in range(3):
-            naveEnemigaComun = clases_sprites.NaveEnemigaComun()
-            
-            if i==0:
-                naveEnemigaComun.rect.x = 250
-                naveEnemigaComun.rect.y = -100
-                naveEnemigaComun.update()
-                
-            if i==1:
-                naveEnemigaComun.rect.x = 325
-                naveEnemigaComun.rect.y = -200
-                
-            if i==2:
-                naveEnemigaComun.rect.x = 400
-                naveEnemigaComun.rect.y = -100
-                    
+    elif object.fase_nivel == 3:
+        for i in range(250, 450, 75):
+            if i != 325: naveEnemigaComun = clases_sprites.NaveEnemigaComun(i, -100)
+            else:      naveEnemigaComun = clases_sprites.NaveEnemigaComun(i, -200)
             object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
             object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
             object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
         
     
 def nivel_2(object):
-    
     if object.fase_nivel == 1:
-        for i in range(4):
-            naveEnemigaComun = clases_sprites.NaveEnemigaComun()
-        
-            if i==0:
-                naveEnemigaComun.rect.x = 50
-                naveEnemigaComun.rect.y = -100
-            
-            if i==1:
-                naveEnemigaComun.rect.x = 100
-                naveEnemigaComun.rect.y = -50
-            
-            if i==2:
-                naveEnemigaComun.rect.x = 650
-                naveEnemigaComun.rect.y = -50
-        
-            if i==3:
-                naveEnemigaComun.rect.x = 700
-                naveEnemigaComun.rect.y = -100
-                    
+        x = 50
+        y = -100
+        while x < 726:
+            naveEnemigaComun = clases_sprites.NaveEnemigaComun(x, y)
             object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
             object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
             object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
+            if x == 50: y = -50
+            elif x == 100: x = 600
+            elif x == 650: y = -100
+            x += 50
         
         
-    if object.fase_nivel == 2:
+    elif object.fase_nivel == 2:
         for x in range(0, 700, 75):
-            naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-            naveEnemigaKamikaze.rect.x = x
-            naveEnemigaKamikaze.rect.y = -100
-            
+            naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze(x, -100)
             object.lista_Naves_Enemigas_Kamikazes.add(naveEnemigaKamikaze)
             object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaKamikaze)
             object.lista_Todos_Los_Sprites.add(naveEnemigaKamikaze)
             
         
-    if object.fase_nivel == 3:
-        for i in range(9):
-            
-            if i==0:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 200
-                naveEnemigaKamikaze.rect.y = -100
-            
-            if i==1:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 200
-                naveEnemigaKamikaze.rect.y = -200
-                
-            if i==2:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 200
-                naveEnemigaKamikaze.rect.y = -300
-            
-            if i==3:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 200
-                naveEnemigaKamikaze.rect.y = -400
-
-            if i==4:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 400
-                naveEnemigaKamikaze.rect.y = -100
-                
-            if i==5:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 400
-                naveEnemigaKamikaze.rect.y = -200
-                
-            if i==6:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 400
-                naveEnemigaKamikaze.rect.y = -300
-                
-            if i==7:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 400
-                naveEnemigaKamikaze.rect.y = -400
-            
-            if i<=7:
+    elif object.fase_nivel == 3:
+        for i in range (9):
+            if i < 8:
+                if i < 4:
+                    x = 200
+                    y = (i + 1) * -100
+                else:
+                    x = 400
+                    y = (i - 3) * - 100
+                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze(x, y)
                 object.lista_Naves_Enemigas_Kamikazes.add(naveEnemigaKamikaze)
                 object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaKamikaze)
                 object.lista_Todos_Los_Sprites.add(naveEnemigaKamikaze)
-        
-            if i==8:
-                naveEnemigaComun = clases_sprites.NaveEnemigaComun()
-                naveEnemigaComun.rect.x = 300
-                naveEnemigaComun.rect.y = -100
-                
+            else:
+                naveEnemigaComun = clases_sprites.NaveEnemigaComun(300, -100)
                 object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
                 object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
                 object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
@@ -292,74 +200,55 @@ def nivel_2(object):
 def nivel_3(object):
     
     if object.fase_nivel == 1:
-        pass
+        naveEnemigaComun = clases_sprites.NaveEnemigaComun(375, -100)
+        object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
+        object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
+        object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
+        y = -100
+        for x in range(375, 500, 50):
+            naveEnemigaComun = clases_sprites.NaveEnemigaComun(x, y)
+            object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
+            object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
+            object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
+            y -= 100
+        for x in range(275, 350, 50):
+            y += 100
+            naveEnemigaComun = clases_sprites.NaveEnemigaComun(x, y)
+            object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
+            object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
+            object.lista_Todos_Los_Sprites.add(naveEnemigaComun)  
     
-    if object.fase_nivel == 2:
-        for i in range(10):
-            if i==0:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 0
-                naveEnemigaKamikaze.rect.y = -100
-            if i==1:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 75
-                naveEnemigaKamikaze.rect.y = -100
-            if i==2:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 150
-                naveEnemigaKamikaze.rect.y = -100
-            if i==3:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 725
-                naveEnemigaKamikaze.rect.y = -400
-            if i==4:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 650
-                naveEnemigaKamikaze.rect.y = -400
-            if i==5:
-                naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze()
-                naveEnemigaKamikaze.rect.x = 575
-                naveEnemigaKamikaze.rect.y = -400
-            
-            if i<=5:
-                object.lista_Naves_Enemigas_Kamikazes.add(naveEnemigaKamikaze)
-                object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaKamikaze)
-                object.lista_Todos_Los_Sprites.add(naveEnemigaKamikaze)
-            
-            if i==6:
-                naveEnemigaComun = clases_sprites.NaveEnemigaComun()
-                naveEnemigaComun.rect.x = 300
-                naveEnemigaComun.rect.y = -100
-            if i==7:
-                naveEnemigaComun = clases_sprites.NaveEnemigaComun()
-                naveEnemigaComun.rect.x = 375
-                naveEnemigaComun.rect.y = -100
-            if i==8:
-                naveEnemigaComun = clases_sprites.NaveEnemigaComun()
-                naveEnemigaComun.rect.x = 450
-                naveEnemigaComun.rect.y = -100
-            if i==9:
-                naveEnemigaComun = clases_sprites.NaveEnemigaComun()
-                naveEnemigaComun.rect.x = 375
-                naveEnemigaComun.rect.y = -200
-        
-            if i>=6:
-                object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
-                object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
-                object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
+
+    elif object.fase_nivel == 2:
+        x = 0
+        y = -100
+        while x <= 726: 
+            naveEnemigaKamikaze = clases_sprites.NaveEnemigaKamikaze(x, y)
+            object.lista_Naves_Enemigas_Kamikazes.add(naveEnemigaKamikaze)
+            object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaKamikaze)
+            object.lista_Todos_Los_Sprites.add(naveEnemigaKamikaze)
+            if x != 150:    x += 75
+            else:
+                            x = 575
+                            y = -400
+        x = 300
+        y = -100
+        while y >= -200:
+            naveEnemigaComun = clases_sprites.NaveEnemigaComun(x, y)
+            object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
+            object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
+            object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
+            if x == 450:
+                x = 375
+                y = -200
+            elif y == -200: y-=1 #Terminar while
+            else: x += 75
         
     
-    if object.fase_nivel == 3:
-        jefe = clases_sprites.Jefe()
-        jefe.rect.x = 300
-        jefe.rect.y = -100
-    
+    elif object.fase_nivel == 3:
+        jefe = clases_sprites.Jefe(300, -100)
         object.lista_Jefes.add(jefe)
         object.lista_Todas_Las_Naves_Enemigas.add(jefe)
         object.lista_Todos_Los_Sprites.add(jefe)
 
 #--------------------------------------------------------------------------------------------------------#
-
-    
-    
-    

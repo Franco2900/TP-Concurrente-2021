@@ -110,27 +110,22 @@ class Game(object):
                 if laserEnemigo.rect.y > 610: 
                     self.lista_Todos_Los_Sprites.remove(laserEnemigo)
                     self.lista_Laser_Enemigos.remove(laserEnemigo)
-    
-            
+
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 1 and self.fase_nivel < 3: #Para chequear la fase del nivel
                 self.fase_nivel += 1         
                 util.nivel_1(self)
-
                                 
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 1 and self.fase_nivel == 3: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
                 self.stage_complete = True
     
-    
-            
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 2 and self.fase_nivel < 3: #Para chequear la fase del nivel
                 self.fase_nivel += 1         
                 util.nivel_2(self)
-
                                 
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 2 and self.fase_nivel == 3: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
                 self.stage_complete = True
                 
-            #------------------------------------------------------------#
+
             if len(self.lista_Todas_Las_Naves_Enemigas) == 0 and self.nivel == 3 and self.fase_nivel < 3: #Para chequear la fase del nivel
                 self.fase_nivel += 1
                 if self.fase_nivel == 3:
@@ -143,7 +138,6 @@ class Game(object):
                 pygame.mixer.music.stop()
                 pygame.mixer.music.load("Musica/All Stage Clear Contra Hard Corps Genesis Soundtrack.mp3")
                 pygame.mixer.music.play(-1)
-            #------------------------------------------------------------#
 
             #------------------------------------------------------------#
             #Para el ataque con los laseres duales delanteros del jefe
@@ -160,7 +154,33 @@ class Game(object):
                 self.lista_Laser_Enemigos.add(laserEnemigo)
                 self.lista_Todos_Los_Sprites.add(laserEnemigo)
             #------------------------------------------------------------#
+            
+            if len(self.lista_Todas_Las_Naves_Enemigas) == 0: 
+                   self.stage_complete = True 
+            """if len(self.lista_Todas_Las_Naves_Enemigas) == 0:
+                if self.nivel == 1:
+                    if self.fase_nivel < 3: #Para chequear la fase del nivel
+                        self.fase_nivel += 1         
+                        util.nivel_1(self)
+                    else: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
+                        self.stage_complete = True
     
+                elif self.nivel == 2:
+                    if self.fase_nivel < 3: #Para chequear la fase del nivel
+                        self.fase_nivel += 1         
+                        util.nivel_2(self)
+                    else: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
+                        self.stage_complete = True
+                      
+                elif self.nivel == 3:
+                    if self.fase_nivel < 3: #Para chequear la fase del nivel
+                        self.fase_nivel += 1         
+                        util.nivel_3(self)
+                    else: #En caso de que se maten a todos los enemigos de la ultima fase de nivel
+                        self.stage_complete = True"""
+                        
+    
+
     def mostrar_en_pantalla(self, ventana):
         
         if self.altura_fondo < 0: self.altura_fondo += 0.5  #Chequeo si la parte de arriba del fondo toco el pixel 0 y me fijo si sigo reccoriendo o no el fondo

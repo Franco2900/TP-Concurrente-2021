@@ -7,13 +7,15 @@ Created on Thu Jan 21 20:49:54 2021
 import pygame,util,random
 
 class NaveEnemigaComun(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x, y):
         super().__init__()
         self.image = pygame.transform.scale(pygame.image.load("Imagenes/Sprites/nave_enemiga_comun.png").convert_alpha(), (75,75) ) 
         self.image = pygame.transform.rotozoom (self.image, 180, 1)
         self.image.set_colorkey([255, 255, 255])
         self.rect = self.image.get_rect() 
         self.vida = 2
+        self.rect.x = x
+        self.rect.y = y
         
     def update(self):
         if self.rect.y > 650: self.rect.y = -100 #En caso de que la nave se pierda de vista
@@ -31,13 +33,15 @@ class LaserEnemigo(pygame.sprite.Sprite):
         util.movimiento(self, False, True, 0, 5)
 
 class NaveEnemigaKamikaze(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x, y):
         super().__init__()
         self.image = pygame.transform.scale(pygame.image.load("Imagenes/Sprites/nave_kamikaze.png").convert_alpha(), (75,75) ) 
         self.image = pygame.transform.rotozoom (self.image, 180, 1)
         self.image.set_colorkey([255, 255, 255])
         self.rect = self.image.get_rect() 
         self.vida = 1
+        self.rect.x = x
+        self.rect.y = y
         
     def update(self):
         if self.rect.y > 650: self.rect.y = -100 #En caso de que la nave se pierda de vista
@@ -75,13 +79,15 @@ class LaserJugador(pygame.sprite.Sprite):
         
         
 class Jefe(pygame.sprite.Sprite):
-    def __init__(self): 
+    def __init__(self, x, y): 
         super().__init__()
         self.image = pygame.transform.scale(pygame.image.load("Imagenes/Sprites/jefe.png"), (150,150) )
         self.image = pygame.transform.rotozoom (self.image, 180, 1)
         self.image.set_colorkey([255,255,255])
         self.rect = self.image.get_rect()
         self.vida = 50
+        self.rect.x = x
+        self.rect.y = y
         
     def update(self):
         if self.rect.y > 750: #En caso de que la nave se pierda de vista
