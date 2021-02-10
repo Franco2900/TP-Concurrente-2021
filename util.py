@@ -73,26 +73,40 @@ def disparo_enemigo(object, cantidad_disparos):
             object.lista_Todos_Los_Sprites.add(laserEnemigo1)
             if cantidad_disparos > 1:  object.lista_Todos_Los_Sprites.add(laserEnemigo2)
             if cantidad_disparos == 3:  object.lista_Todos_Los_Sprites.add(laserEnemigo3)
+         
+        #------------------------------------------------------------#
+        for jefe in object.lista_Jefes:
+            laserIzquierda = clases_sprites.LaserEnemigoDiagonalIzquierda()
+            laserIzquierda.rect.x = jefe.rect.right
+            laserIzquierda.rect.y = jefe.rect.bottom
+            object.lista_Laser_Enemigos.add(laserIzquierda)
+            object.lista_Todos_Los_Sprites.add(laserIzquierda)
             
+            laserDerecha = clases_sprites.LaserEnemigoDiagonalDerecha()
+            laserDerecha.rect.x = jefe.rect.left
+            laserDerecha.rect.y = jefe.rect.bottom
+            object.lista_Laser_Enemigos.add(laserDerecha)
+            object.lista_Todos_Los_Sprites.add(laserDerecha)
+            """
+            La idea de estos misiles era que cambien de dirección cuando estaban en la misma altura x que el jugador
+            if jefe.rect.y > 0 and jefe.rect.y < 100:
+                misilEnemigoDerecha = clases_sprites.MisilDerecha()
+                misilEnemigoDerecha.rect.x = jefe.rect.right
+                misilEnemigoDerecha.rect.y = jefe.rect.bottom
+                print(jefe.rect.x,jefe.rect.y)
+                object.lista_Misiles_Enemigos.add(misilEnemigoDerecha)
+                object.lista_Todos_Los_Sprites.add(misilEnemigoDerecha)
+        
+                misilEnemigoIzquierda = clases_sprites.MisilIzquierda()
+                misilEnemigoIzquierda.rect.x = jefe.rect.left
+                misilEnemigoIzquierda.rect.y = jefe.rect.bottom
+                object.lista_Misiles_Enemigos.add(misilEnemigoIzquierda)
+                object.lista_Todos_Los_Sprites.add(misilEnemigoIzquierda)
+            """
+        #------------------------------------------------------------#
         clock.tick(0.5)
 
 
-def disparo_jefe(object):
-    clock = pygame.time.Clock()
-    
-    while True:
-        for jefe in object.lista_Jefes:
-            misilEnemigoDerecha = clases_sprites.MisilDerecha()
-            misilEnemigoDerecha.rect.x = jefe.rect.right
-            misilEnemigoDerecha.rect.y = jefe.rect.midright
-            object.lista_Misiles_Enemigos.add(misilEnemigoDerecha)
-
-            misilEnemigoIzquierda = clases_sprites.MisilIzquierda()
-            misilEnemigoIzquierda.rect.x = jefe.rect.left
-            misilEnemigoIzquierda.rect.y = jefe.rect.midright
-            object.lista_Misiles_Enemigos.add(misilEnemigoIzquierda)
-
-    clock.tick(1)
 
 #--------------------------------------------------------------------------------------------------------#
 #Funciones de movimiento
@@ -202,8 +216,7 @@ def nivel_3(object):
             naveEnemigaComun = clases_sprites.NaveEnemigaComun(x, y)
             object.lista_Naves_Enemigas_Comunes.add(naveEnemigaComun)
             object.lista_Todas_Las_Naves_Enemigas.add(naveEnemigaComun)
-            object.lista_Todos_Los_Sprites.add(naveEnemigaComun)
-        
+            object.lista_Todos_Los_Sprites.add(naveEnemigaComun)  
     
 
     elif object.fase_nivel == 2:

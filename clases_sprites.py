@@ -91,11 +91,11 @@ class Jefe(pygame.sprite.Sprite):
         
     def update(self):
         if self.rect.y > 750: #En caso de que la nave se pierda de vista
-            self.rect.y = -150 
+            self.rect.y = -200 
             self.rect.x = random.randrange(650)
         else: self.rect.y += 3
         
-        
+"""       
 class MisilDerecha(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -106,7 +106,7 @@ class MisilDerecha(pygame.sprite.Sprite):
         self.rect.x += 5
         
 
-class MisilIzquierda():
+class MisilIzquierda(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.transform.scale(pygame.image.load("Imagenes/Sprites/misil.png"), (45,45) )
@@ -115,3 +115,25 @@ class MisilIzquierda():
 
     def update(self):
         self.rect.x -= 5
+"""
+
+class LaserEnemigoDiagonalIzquierda(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("Imagenes/Sprites/laser.png")
+        self.image.set_colorkey([255,255,255])
+        self.rect = self.image.get_rect()
+    
+    def update(self):
+        util.movimiento(self, True, True, 3, 5)
+        
+
+class LaserEnemigoDiagonalDerecha(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("Imagenes/Sprites/laser.png")
+        self.image.set_colorkey([255,255,255])
+        self.rect = self.image.get_rect()
+    
+    def update(self):
+        util.movimiento(self, True, True, -3, 5)
